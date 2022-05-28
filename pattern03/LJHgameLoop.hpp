@@ -130,4 +130,4 @@ namespace LeeJungHan_Engine
             exit(EXIT_SUCCESS);
         }
     };
-}
+}// ¾î·Æ´Ù ¤Ð
