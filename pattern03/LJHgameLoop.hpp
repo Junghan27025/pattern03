@@ -31,7 +31,7 @@ namespace LeeJungHan_Engine
         void Run()
         {
             bool GameRunning = true;
-            float a = 0, b, c = 0.5 , d,e = 0.9;
+            float a, d = 0, b, c = 0.5;
             GLFWwindow* window;
             glfwSetErrorCallback(error_callback);
             if (!glfwInit())
@@ -55,12 +55,23 @@ namespace LeeJungHan_Engine
                 glfwGetFramebufferSize(window, &width, &height);
                 ratio = width / (float)height;
 
-                if (GetAsyncKeyState(VK_SPACE) & 0x8000 || GetAsyncKeyState(VK_SPACE) & 0x8001)
+                if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState(VK_UP) & 0x8001)
                 {
                     b = 0.3;
                 }
+                
+                else if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState(VK_RIGHT) & 0x8001)
+                {
+                    a = 0.3;
+                }
+
+                else if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState(VK_LEFT) & 0x8001)
+                {
+                    a = -0.3;
+                }
                 else
                 {
+                    a = 0;
                     b = 0;
                 }
 
@@ -102,9 +113,9 @@ namespace LeeJungHan_Engine
                 }
 
                 glPointSize(10);
-                glBegin(GL_POINTS);
+                glBegin(GL_TRIANGLES);
                 glColor3f(1, 1, 1);
-                glVertex2f(c, a);
+                glVertex2f(c, d);
                 glEnd();
 
                 if (a == 0 && b == 0)
