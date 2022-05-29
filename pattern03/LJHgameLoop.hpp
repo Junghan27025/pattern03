@@ -6,6 +6,9 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
+#include "Player.hpp"
+#include "Enemy.hpp"
+
 
 
 #pragma comment(lib,"OpenGL32")
@@ -26,12 +29,61 @@ namespace LeeJungHan_Engine
     class LJHGameLoop
     {
 
-    public:
+    private:
+        Player player;
+        Enemy enemy;
+        bool GameRunning = true;
 
+    private:
+        void reStart() {
+            if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || GetAsyncKeyState(VK_SHIFT) & 0x8001)
+            {
+                GameRunning = true;
+                enemy.enemyX[0] = 1;
+                enemy.enemyX[1] = 1;
+                enemy.enemyX[2] = 1;
+            }
+        }
+    public:
+        void Input() {
+            if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState(VK_UP) & 0x8001)
+            {
+                player.upPressed();
+            }
+            else if (GetAsyncKeyState(VK_DOWN) & 0x8000 || GetAsyncKeyState(VK_DOWN) & 0x8001)
+            {
+                player.downPressed();
+            }
+            else if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState(VK_RIGHT) & 0x8001)
+            {
+                player.rightPressed();
+            }
+            else if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState(VK_LEFT) & 0x8001)
+            {
+                player.leftPressed();
+            }
+            else if (GetAsyncKeyState(0x41) & 0x8000 || GetAsyncKeyState(0x41) & 0x8001)
+            {
+                player.firstPressed();
+            }
+            else if (GetAsyncKeyState(0x53) & 0x8000 || GetAsyncKeyState(0x53) & 0x8001)
+            {
+                player.secondPressed();
+            }
+            else if (GetAsyncKeyState(0x44) & 0x8000 || GetAsyncKeyState(0x44) & 0x8001)
+            {
+                player.thirdPressed();
+            }
+            
+
+        }
         void Run()
         {
-            bool GameRunning = true;
-            float a, d = 0, b, c = 0.5;
+            Update();
+        }
+    private:
+        void Update() {
+
             GLFWwindow* window;
             glfwSetErrorCallback(error_callback);
             if (!glfwInit())
@@ -55,80 +107,183 @@ namespace LeeJungHan_Engine
                 glfwGetFramebufferSize(window, &width, &height);
                 ratio = width / (float)height;
 
-                if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState(VK_UP) & 0x8001)
-                {
-                    b = 0.3;
-                }
-                
-                else if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState(VK_RIGHT) & 0x8001)
-                {
-                    a = 0.3;
-                }
 
-                else if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState(VK_LEFT) & 0x8001)
+
+
+
+                if (GameRunning == true)
                 {
-                    a = -0.3;
+                    Input();
+                    enemy.firstMove();
+                    /*enemy.secondMove();*/
                 }
-                else
+                if (GameRunning == false)
                 {
-                    a = 0;
-                    b = 0;
+                    cout << " 게임 종료";
+                    glClearColor(1, 0, 0, 0);
+                    glClear(GL_COLOR_BUFFER_BIT);
+
+                    glEnd();
+                    reStart();
                 }
 
                 glClearColor(0, 0, 0, 0);
                 glClear(GL_COLOR_BUFFER_BIT);
-                glPointSize(30);
-                glBegin(GL_POINTS);
-                glColor3f(255, 255, 0);
-                glVertex2f(a, b);
-
-                if (GameRunning == true)
-                {
-                    if (c <= -1 && c != 0)
-                    {
-                        c -= 0.0005;
-                        c = 1;
-                    }
-                    else if (c == 0.1)
-                    {
-                        c = 0.005;
-
-                    }
-                    else
-                    {
-                        c -= 0.0005;
-                    }
-                }
-                if (GameRunning == false)
-                {
-                    if (GetAsyncKeyState(VK_SPACE) & 0x8000 || GetAsyncKeyState(VK_SPACE) & 0x8001)
-                    {
-                        GameRunning = true;
-                        c = 1;
-                    }
-                    if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || GetAsyncKeyState(VK_SHIFT) & 0x8001)
-                    {
-                        break;
-                    }
-                }
-
-                glPointSize(10);
-                glBegin(GL_TRIANGLES);
-                glColor3f(1, 1, 1);
-                glVertex2f(c, d);
+                //road
+                glBegin(GL_QUADS);
+                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f, 0.22f, 0.0f);
+                glVertex3f(-1.0f, 0.38f, 0.0f);
+                glVertex3f(1.0f, 0.38f, 0.0f);
+                glVertex3f(1.0f, 0.22f, 0.0f);
                 glEnd();
 
-                if (a == 0 && b == 0)
+                glBegin(GL_QUADS);
+                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f, -0.08f, 0.0f);
+                glVertex3f(-1.0f, 0.08f, 0.0f);
+                glVertex3f(1.0f, 0.08f, 0.0f);
+                glVertex3f(1.0f, -0.08f, 0.0f);
+                glEnd();
+
+                glBegin(GL_QUADS);
+                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f, -0.22f, 0.0f);
+                glVertex3f(-1.0f, -0.38f, 0.0f);
+                glVertex3f(1.0f, -0.38f, 0.0f);
+                glVertex3f(1.0f, -0.22f, 0.0f);
+                glEnd();
+
+                glBegin(GL_QUADS);
+                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                glVertex3f(-0.08f, 0.38f, 0.0f);
+                glVertex3f(0.08f, 0.38f, 0.0f);
+                glVertex3f(0.08f, -0.38f, 0.0f);
+                glVertex3f(-0.08f, -0.38f, 0.0f);
+                glEnd();
+
+
+                glBegin(GL_QUADS);
+                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                glVertex3f(-0.5f, 1.0f, 0.0f);
+                glVertex3f(-0.5f, -1.0f, 0.0f);
+                glVertex3f(-0.4f, -1.0f, 0.0f);
+                glVertex3f(-0.4f, 1.0f, 0.0f);
+                glEnd();
+
+                glBegin(GL_QUADS);
+                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                glVertex3f(0.5f, 1.0f, 0.0f);
+                glVertex3f(0.5f, -1.0f, 0.0f);
+                glVertex3f(0.4f, -1.0f, 0.0f);
+                glVertex3f(0.4f, 1.0f, 0.0f);
+                glEnd();
+
+                glBegin(GL_QUADS);
+                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                glVertex3f(0.08f, 1.0f, 0.0f);
+                glVertex3f(0.08f, -1.0f, 0.0f);
+                glVertex3f(-0.08f, -1.0f, 0.0f);
+                glVertex3f(-0.08f, 1.0f, 0.0f);
+                glEnd();
+
+                ///player
+                glPointSize(30);
+                glBegin(GL_POINTS);
+                glColor3f(0.3f, 0.9f, 0.8f);
+                glVertex2f(player.playerX, player.playerY);
+
+
+                //enemy
+                glPointSize(10);
+                glBegin(GL_POINTS);
+                glColor3f(0.0f, 0.0f, 0.0f);
+                for (int i = 0; i < 3; i++) {
+                    glVertex2f(enemy.enemyX[i], enemy.enemyY[i]);
+                }
+                glEnd();
+
+               
+                glBegin(GL_POINTS);
+                glColor3f(0.0f, 0.0f, 0.0f);
+                for (int i = 0; i < 3; i++) {
+                    glVertex2f(enemy.enemy1X[i], enemy.enemy1Y[i]);
+                }
+                glEnd();
+
+
+                if (player.playerX == 0 && player.playerY == 0.3f)
                 {
-                    if (c < 0.01 && c>-0.01)
+                    if (enemy.enemyX[0] < 0.03f && enemy.enemyX[0] > -0.03f)
                     {
                         GameRunning = false;
-                        cout << "게임 오버";
-                        glColor3f(0, 1, 0);
-
-                        glEnd();
                     }
                 }
+                if (player.playerX == 0 && player.playerY == 0)
+                {
+                    if (enemy.enemyX[1] < 0.03f && enemy.enemyX[1] > -0.03f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == 0 && player.playerY == -0.3f)
+                {
+                    if (enemy.enemyX[2] < 0.03f && enemy.enemyX[2] > -0.03f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == 0.45f && player.playerY == 0.3f)
+                {
+                    if (enemy.enemyX[0] < 0.5f && enemy.enemyX[0] > 0.4f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == 0.45f && player.playerY == 0)
+                {
+                    if (enemy.enemyX[1] < 0.5f && enemy.enemyX[1] > 0.4f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == 0.45f && player.playerY == -0.3f)
+                {
+                    if (enemy.enemyX[2] < 0.5f && enemy.enemyX[2] > 0.4f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == -0.45f && player.playerY == 0.3f)
+                {
+                    if (enemy.enemyX[0] < -0.4f && enemy.enemyX[0] > -0.5f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == -0.45f && player.playerY == 0)
+                {
+                    if (enemy.enemyX[1] < -0.4f && enemy.enemyX[1] > -0.5f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == -0.45f && player.playerY == -0.3f)
+                {
+                    if (enemy.enemyX[2] < -0.4f && enemy.enemyX[2] > -0.5f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                if (player.playerX == -0.45f && player.playerY == -0.3f)
+                {
+                    if (enemy.enemy1Y[0] < -0.4f && enemy.enemy1Y[0] > -0.5f)
+                    {
+                        GameRunning = false;
+                    }
+                }
+                
+
 
 
                 glfwSwapBuffers(window);
@@ -141,4 +296,4 @@ namespace LeeJungHan_Engine
             exit(EXIT_SUCCESS);
         }
     };
-}// 어렵다 ㅠ
+}
