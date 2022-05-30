@@ -11,7 +11,6 @@ public:
 	};
 	~Player()  {};
 
-	
 	void qPressed() {
 		playerX = -0.45f;
 		playerY = 0.3f;

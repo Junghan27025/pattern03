@@ -84,10 +84,7 @@ namespace LeeJungHan_Engine
             else if (GetAsyncKeyState(0x43) & 0x8000 || GetAsyncKeyState(0x43) & 0x8001)
             {
                 player.cPressed();
-            }
-
-
-            
+            }        
 
         }
         void Run()
@@ -120,14 +117,10 @@ namespace LeeJungHan_Engine
                 glfwGetFramebufferSize(window, &width, &height);
                 ratio = width / (float)height;
 
-
-
-
-
                 if (GameRunning == true)
                 {
                     Input();
-                    enemy.firstMove();
+                    enemy.enemyMove();
                    
                 }
                 if (GameRunning == false)
@@ -196,15 +189,11 @@ namespace LeeJungHan_Engine
                 glVertex3f(-0.08f, 1.0f, 0.0f);
                 glEnd();
 
-                
-
-
                 ///player
                 glPointSize(30);
                 glBegin(GL_POINTS);
                 glColor3f(0.3f, 0.9f, 0.8f);
                 glVertex2f(player.playerX, player.playerY);
-
 
                 //enemy
                 glPointSize(10);
@@ -214,15 +203,13 @@ namespace LeeJungHan_Engine
                     glVertex2f(enemy.enemyX[i], enemy.enemyY[i]);
                 }
                 glEnd();
-
-               
+           
                 glBegin(GL_POINTS);
                 glColor3f(0.0f, 0.0f, 0.0f);
                 for (int i = 0; i < 3; i++) {
                     glVertex2f(enemy.enemy1X[i], enemy.enemy1Y[i]);
                 }
                 glEnd();
-
 
                 if (player.playerX == 0 && player.playerY == 0.3f)
                 {
@@ -257,6 +244,8 @@ namespace LeeJungHan_Engine
                         GameRunning = false;
                     }
                 }
+
+
                 if (player.playerX == 0.45f && player.playerY == 0.3f)
                 {
                     if (enemy.enemyX[0] < 0.5f && enemy.enemyX[0] > 0.4f)
@@ -290,6 +279,8 @@ namespace LeeJungHan_Engine
                         GameRunning = false;
                     }
                 }
+
+
                 if (player.playerX == -0.45f && player.playerY == 0.3f)
                 {
                     if (enemy.enemyX[0] < -0.4f && enemy.enemyX[0] > -0.5f)
@@ -323,20 +314,6 @@ namespace LeeJungHan_Engine
                         GameRunning = false;
                     }
                 }
-               
-              
-                
-               
-                
-                
-                
-                
-                
-              
-
-                
-
-
 
                 glfwSwapBuffers(window);
                 glfwPollEvents();

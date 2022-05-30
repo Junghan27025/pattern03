@@ -23,10 +23,7 @@ public:
     ~Enemy() {};
 
  
-  
-
-    void firstMove() {
-        //enemyX[0] 제일 아래 
+    void enemyMove() {   
         if (enemyX[0] <= -1)
         {
             enemyX[0] = 1;
