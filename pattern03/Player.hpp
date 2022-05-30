@@ -11,29 +11,41 @@ public:
 	};
 	~Player()  {};
 
-	void upPressed() {
+	
+	void qPressed() {
+		playerX = -0.45f;
 		playerY = 0.3f;
 	}
-	void downPressed() {
+	void wPressed() {
+		playerX = 0;
+		playerY = 0.3f;
+	}
+	void ePressed() {
+		playerX = 0.45f;
+		playerY = 0.3f;
+	}
+	void aPressed() {
+		playerX = -0.45f;
+		playerY = 0;
+	}
+	void sPressed() {
+		playerX = 0;
+		playerY = 0;
+	}
+	void dPressed() {
+		playerX = 0.45f;
+		playerY = 0;
+	}
+	void zPressed() {
+		playerX = -0.45f;
 		playerY = -0.3f;
 	}
-	void rightPressed() {
+	void xPressed() {
+		playerX = 0;
+		playerY = -0.3f;
+	}
+	void cPressed() {
 		playerX = 0.45f;
+		playerY = -0.3f;
 	}
-	void leftPressed() {
-		playerX = -0.45f;
-	}
-	void firstPressed() {
-		playerY = 0.0f;
-		playerX = -0.45f;
-	}
-	void secondPressed() {
-		playerY = 0.0f;
-		playerX = 0.0f;
-	}
-	void thirdPressed() {
-		playerY = 0.0f;
-		playerX = 0.45f;
-	}
-	
 };

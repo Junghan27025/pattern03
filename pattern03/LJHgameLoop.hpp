@@ -42,38 +42,51 @@ namespace LeeJungHan_Engine
                 enemy.enemyX[0] = 1;
                 enemy.enemyX[1] = 1;
                 enemy.enemyX[2] = 1;
+                enemy.enemy1Y[0] = 1;
+                enemy.enemy1Y[1] = 1;
+                enemy.enemy1Y[2] = 1;
             }
         }
     public:
         void Input() {
-            if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState(VK_UP) & 0x8001)
+            if (GetAsyncKeyState(0x51) & 0x8000 || GetAsyncKeyState(0x51) & 0x8001)
             {
-                player.upPressed();
+                player.qPressed();
             }
-            else if (GetAsyncKeyState(VK_DOWN) & 0x8000 || GetAsyncKeyState(VK_DOWN) & 0x8001)
+            else if (GetAsyncKeyState(0x57) & 0x8000 || GetAsyncKeyState(0x57) & 0x8001)
             {
-                player.downPressed();
+                player.wPressed();
             }
-            else if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState(VK_RIGHT) & 0x8001)
+            else if (GetAsyncKeyState(0x45) & 0x8000 || GetAsyncKeyState(0x45) & 0x8001)
             {
-                player.rightPressed();
-            }
-            else if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState(VK_LEFT) & 0x8001)
-            {
-                player.leftPressed();
+                player.ePressed();
             }
             else if (GetAsyncKeyState(0x41) & 0x8000 || GetAsyncKeyState(0x41) & 0x8001)
             {
-                player.firstPressed();
+                player.aPressed();
             }
             else if (GetAsyncKeyState(0x53) & 0x8000 || GetAsyncKeyState(0x53) & 0x8001)
             {
-                player.secondPressed();
+                player.sPressed();
             }
             else if (GetAsyncKeyState(0x44) & 0x8000 || GetAsyncKeyState(0x44) & 0x8001)
             {
-                player.thirdPressed();
+                player.dPressed();
             }
+            else if (GetAsyncKeyState(0x5A) & 0x8000 || GetAsyncKeyState(0x5A) & 0x8001)
+            {
+                player.zPressed();
+            }
+            else if (GetAsyncKeyState(0x58) & 0x8000 || GetAsyncKeyState(0x58) & 0x8001)
+            {
+                player.xPressed();
+            }
+            else if (GetAsyncKeyState(0x43) & 0x8000 || GetAsyncKeyState(0x43) & 0x8001)
+            {
+                player.cPressed();
+            }
+
+
             
 
         }
@@ -115,7 +128,7 @@ namespace LeeJungHan_Engine
                 {
                     Input();
                     enemy.firstMove();
-                    /*enemy.secondMove();*/
+                   
                 }
                 if (GameRunning == false)
                 {
@@ -130,12 +143,14 @@ namespace LeeJungHan_Engine
                 glClearColor(0, 0, 0, 0);
                 glClear(GL_COLOR_BUFFER_BIT);
                 //road
+
+                // 가로
                 glBegin(GL_QUADS);
                 glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, 0.22f, 0.0f);
-                glVertex3f(-1.0f, 0.38f, 0.0f);
-                glVertex3f(1.0f, 0.38f, 0.0f);
-                glVertex3f(1.0f, 0.22f, 0.0f);
+                glVertex3f(-1.0f, 0.2f, 0.0f);
+                glVertex3f(-1.0f, 0.4f, 0.0f);
+                glVertex3f(1.0f, 0.4f, 0.0f);
+                glVertex3f(1.0f, 0.2f, 0.0f);
                 glEnd();
 
                 glBegin(GL_QUADS);
@@ -148,21 +163,15 @@ namespace LeeJungHan_Engine
 
                 glBegin(GL_QUADS);
                 glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, -0.22f, 0.0f);
-                glVertex3f(-1.0f, -0.38f, 0.0f);
-                glVertex3f(1.0f, -0.38f, 0.0f);
-                glVertex3f(1.0f, -0.22f, 0.0f);
+                glVertex3f(-1.0f, -0.2f, 0.0f);
+                glVertex3f(-1.0f, -0.4f, 0.0f);
+                glVertex3f(1.0f, -0.4f, 0.0f);
+                glVertex3f(1.0f, -0.2f, 0.0f);
                 glEnd();
 
-                glBegin(GL_QUADS);
-                glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-                glVertex3f(-0.08f, 0.38f, 0.0f);
-                glVertex3f(0.08f, 0.38f, 0.0f);
-                glVertex3f(0.08f, -0.38f, 0.0f);
-                glVertex3f(-0.08f, -0.38f, 0.0f);
-                glEnd();
+                
 
-
+                // 세로
                 glBegin(GL_QUADS);
                 glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
                 glVertex3f(-0.5f, 1.0f, 0.0f);
@@ -186,6 +195,9 @@ namespace LeeJungHan_Engine
                 glVertex3f(-0.08f, -1.0f, 0.0f);
                 glVertex3f(-0.08f, 1.0f, 0.0f);
                 glEnd();
+
+                
+
 
                 ///player
                 glPointSize(30);
@@ -218,10 +230,18 @@ namespace LeeJungHan_Engine
                     {
                         GameRunning = false;
                     }
+                    else if (enemy.enemy1Y[1] < 0.35f && enemy.enemy1Y[1] > 0.25f)
+                    {
+                        GameRunning = false;
+                    }
                 }
                 if (player.playerX == 0 && player.playerY == 0)
                 {
                     if (enemy.enemyX[1] < 0.03f && enemy.enemyX[1] > -0.03f)
+                    {
+                        GameRunning = false;
+                    }
+                    else if (enemy.enemy1Y[1] < 0.03f && enemy.enemy1Y[1] > -0.03f)
                     {
                         GameRunning = false;
                     }
@@ -232,10 +252,18 @@ namespace LeeJungHan_Engine
                     {
                         GameRunning = false;
                     }
+                    else if (enemy.enemy1Y[1] < -0.25f && enemy.enemy1Y[1] > -0.35f)
+                    {
+                        GameRunning = false;
+                    }
                 }
                 if (player.playerX == 0.45f && player.playerY == 0.3f)
                 {
                     if (enemy.enemyX[0] < 0.5f && enemy.enemyX[0] > 0.4f)
+                    {
+                        GameRunning = false;
+                    }
+                    else if (enemy.enemy1Y[0] < 0.35f && enemy.enemy1Y[0] > 0.25f)
                     {
                         GameRunning = false;
                     }
@@ -246,10 +274,18 @@ namespace LeeJungHan_Engine
                     {
                         GameRunning = false;
                     }
+                    else if (enemy.enemy1Y[0] < 0.03f && enemy.enemy1Y[0] > -0.03f)
+                    {
+                        GameRunning = false;
+                    }
                 }
                 if (player.playerX == 0.45f && player.playerY == -0.3f)
                 {
                     if (enemy.enemyX[2] < 0.5f && enemy.enemyX[2] > 0.4f)
+                    {
+                        GameRunning = false;
+                    }
+                    else if (enemy.enemy1Y[0] < -0.25f && enemy.enemy1Y[0] > -0.35f)
                     {
                         GameRunning = false;
                     }
@@ -260,6 +296,10 @@ namespace LeeJungHan_Engine
                     {
                         GameRunning = false;
                     }
+                    else if (enemy.enemy1Y[2] < 0.35f && enemy.enemy1Y[2] > 0.25f)
+                    {
+                        GameRunning = false;
+                    }
                 }
                 if (player.playerX == -0.45f && player.playerY == 0)
                 {
@@ -267,6 +307,10 @@ namespace LeeJungHan_Engine
                     {
                         GameRunning = false;
                     }
+                    else if (enemy.enemy1Y[2] < 0.03f && enemy.enemy1Y[2] > -0.03f)
+                    {
+                        GameRunning = false;
+                    } 
                 }
                 if (player.playerX == -0.45f && player.playerY == -0.3f)
                 {
@@ -274,14 +318,22 @@ namespace LeeJungHan_Engine
                     {
                         GameRunning = false;
                     }
-                }
-                if (player.playerX == -0.45f && player.playerY == -0.3f)
-                {
-                    if (enemy.enemy1Y[0] < -0.4f && enemy.enemy1Y[0] > -0.5f)
+                    else if (enemy.enemy1Y[2] < -0.25f && enemy.enemy1Y[2] > -0.35f)
                     {
                         GameRunning = false;
                     }
                 }
+               
+              
+                
+               
+                
+                
+                
+                
+                
+              
+
                 
 
 
