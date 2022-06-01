@@ -4,15 +4,15 @@ private:
     float firstX = 0.45f;
 
 public:
-    float enemyX[3];
+    float enemyX[3]; 
     float enemyY[3];
     float enemy1X[3];
     float enemy1Y[3];
 
     Enemy() {
         for (int i = 0; i < 3; i++) {
-            enemyX[i] = 1;
-            enemyY[i] = firstY;
+            enemyX[i] = 1;   
+            enemyY[i] = firstY; 
             firstY -= 0.3f;
             enemy1X[i] = firstX;
             firstX -= 0.45f;
@@ -30,7 +30,7 @@ public:
         }
         else
         {
-            enemyX[0] -= 0.00008f;
+            enemyX[0] -= 0.00009f;
         }
         if (enemyX[1] <= -1)
         {
@@ -38,7 +38,7 @@ public:
         }
         else
         {
-            enemyX[1] -= 0.00009f;
+            enemyX[1] -= 0.00008f;
         }
         if (enemyX[2] <= -1)
         {
@@ -54,7 +54,7 @@ public:
         }
         else
         {
-            enemy1Y[0] -= 0.00009f;
+            enemy1Y[0] -= 0.00006f;
         }
         if (enemy1Y[1] <= -1)
         {
@@ -70,7 +70,7 @@ public:
         }
         else
         {
-            enemy1Y[2] -= 0.00008f;
+            enemy1Y[2] -= 0.00005f;
         }
     }
     

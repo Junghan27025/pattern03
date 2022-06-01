@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -8,21 +10,13 @@
 #include <Windows.h>
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "WindowScreen.hpp"
 
 
 
 #pragma comment(lib,"OpenGL32")
 using namespace std;
 
-static void error_callback(int error, const char* description)
-{
-    fputs(description, stderr);
-}
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
-}
 
 namespace LeeJungHan_Engine
 {
@@ -31,8 +25,9 @@ namespace LeeJungHan_Engine
 
     private:
         Player player;
-        Enemy enemy;
+        Enemy enemy;    
         bool GameRunning = true;
+        WindowScreen windowScreen;
 
     private:
         void reStart() {
@@ -47,7 +42,6 @@ namespace LeeJungHan_Engine
                 enemy.enemy1Y[2] = 1;
             }
         }
-    public:
         void Input() {
             if (GetAsyncKeyState(0x51) & 0x8000 || GetAsyncKeyState(0x51) & 0x8001)
             {
@@ -84,55 +78,40 @@ namespace LeeJungHan_Engine
             else if (GetAsyncKeyState(0x43) & 0x8000 || GetAsyncKeyState(0x43) & 0x8001)
             {
                 player.cPressed();
-            }        
-
+            }
         }
+
+        static void error_callback(int error, const char* description)
+        {
+            fputs(description, stderr);
+        }
+        static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+        {
+            if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+                glfwSetWindowShouldClose(window, GL_TRUE);
+        }
+    public:
+             
+
+        
         void Run()
         {
-            Update();
+            GameRunning = true;
+            windowScreen.sizeWindow();  //윈도우 조건 체크
+            while (!windowScreen.windowwhile()) {
+                Update();
+            }
+            windowScreen.endWindow(); //윈도우 종료
+
         }
+
+        
     private:
         void Update() {
-
-            GLFWwindow* window;
-            glfwSetErrorCallback(error_callback);
-            if (!glfwInit())
+            if (GameRunning == true)
             {
-                exit(EXIT_FAILURE);
-            }
-            window = glfwCreateWindow(1080, 640, "Simple example", NULL, NULL);
-            if (!window)
-            {
-                glfwTerminate();
-                exit(EXIT_FAILURE);
-            }
-            glfwMakeContextCurrent(window);
-            glfwSetKeyCallback(window, key_callback);
-
-            do
-            {
-
-                float ratio;
-                int width, height;
-                glfwGetFramebufferSize(window, &width, &height);
-                ratio = width / (float)height;
-
-                if (GameRunning == true)
-                {
-                    Input();
-                    enemy.enemyMove();
-                   
-                }
-                if (GameRunning == false)
-                {
-                    cout << " 게임 종료";
-                    glClearColor(1, 0, 0, 0);
-                    glClear(GL_COLOR_BUFFER_BIT);
-
-                    glEnd();
-                    reStart();
-                }
-
+                Input();
+                enemy.enemyMove();
                 glClearColor(0, 0, 0, 0);
                 glClear(GL_COLOR_BUFFER_BIT);
                 //road
@@ -162,7 +141,7 @@ namespace LeeJungHan_Engine
                 glVertex3f(1.0f, -0.2f, 0.0f);
                 glEnd();
 
-                
+
 
                 // 세로
                 glBegin(GL_QUADS);
@@ -203,7 +182,7 @@ namespace LeeJungHan_Engine
                     glVertex2f(enemy.enemyX[i], enemy.enemyY[i]);
                 }
                 glEnd();
-           
+
                 glBegin(GL_POINTS);
                 glColor3f(0.0f, 0.0f, 0.0f);
                 for (int i = 0; i < 3; i++) {
@@ -301,7 +280,7 @@ namespace LeeJungHan_Engine
                     else if (enemy.enemy1Y[2] < 0.03f && enemy.enemy1Y[2] > -0.03f)
                     {
                         GameRunning = false;
-                    } 
+                    }
                 }
                 if (player.playerX == -0.45f && player.playerY == -0.3f)
                 {
@@ -314,15 +293,37 @@ namespace LeeJungHan_Engine
                         GameRunning = false;
                     }
                 }
+                   
+            }
+            if (GameRunning == false)
+            {
+               
+                cout << " 게임 종료\n\n"; 
+                cout << " 재시작은 SHIFT키를 눌러주세요 \n\n";
+  
+                windowScreen.endScreen();
+                    
 
-                glfwSwapBuffers(window);
-                glfwPollEvents();
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            } while (!glfwWindowShouldClose(window));
+                glEnable(GL_TEXTURE_2D);
+                glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+                glBindTexture(GL_TEXTURE_2D, texName);
 
-            glfwDestroyWindow(window);
-            glfwTerminate();
-            exit(EXIT_SUCCESS);
+                glBegin(GL_QUADS);
+                glTexCoord2f(0.0, 0.0);  glVertex3f(-1.0f, -1.0f, 0.0f);
+                glTexCoord2f(0.0, 1.0);  glVertex3f(-1.0f, 1.0f, 0.0f);
+                glTexCoord2f(1.0, 1.0);  glVertex3f(1.0f, 1.0f, 0.0f);
+                glTexCoord2f(1.0, 0.0);  glVertex3f(1.0f, -1.0f, 0.0f);
+
+
+
+                glEnd();
+                glFlush();
+                glDisable(GL_TEXTURE_2D);
+                reStart();
+            }
+            windowScreen.checkWindowEvent();
         }
     };
 }

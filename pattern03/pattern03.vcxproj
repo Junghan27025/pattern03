@@ -148,6 +148,13 @@
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="LJHgameLoop.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="WindowScreen.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="airplane.bmp" />
+    <Image Include="flower.bmp" />
+    <Image Include="kiel.bmp" />
+    <Image Include="tank.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
