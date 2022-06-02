@@ -96,10 +96,31 @@ namespace LeeJungHan_Engine
         
         void Run()
         {
-            GameRunning = true;
-            windowScreen.sizeWindow();  //윈도우 조건 체크
-            while (!windowScreen.windowwhile()) {
-                Update();
+            /*windowScreen.startScreen();
+
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glEnable(GL_TEXTURE_2D);
+            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+            glBindTexture(GL_TEXTURE_2D, texName);
+
+            glBegin(GL_QUADS);
+            glTexCoord2f(0.0, 0.0);  glVertex3f(-1.0f, -1.0f, 0.0f);
+            glTexCoord2f(0.0, 1.0);  glVertex3f(-1.0f, 1.0f, 0.0f);
+            glTexCoord2f(1.0, 1.0);  glVertex3f(1.0f, 1.0f, 0.0f);
+            glTexCoord2f(1.0, 0.0);  glVertex3f(1.0f, -1.0f, 0.0f);
+
+            glEnd();
+            glFlush();
+            glDisable(GL_TEXTURE_2D);
+            if (GetAsyncKeyState(VK_SPACE) & 0x8000 || GetAsyncKeyState(VK_SPACE) & 0x8001)*/
+            {
+                GameRunning = true;
+                windowScreen.sizeWindow();  //윈도우 조건 체크
+                while (!windowScreen.windowwhile()) {
+
+                    Update();
+                }
             }
             windowScreen.endWindow(); //윈도우 종료
 
@@ -318,19 +339,7 @@ namespace LeeJungHan_Engine
 
                 
 
-                glBegin(GL_QUADS);
-                glTexCoord2f(0.0, 0.0);  glVertex3f(-1.0f, -1.0f, 0.0f);
-                glTexCoord2f(0.0, 1.0);  glVertex3f(-1.0f, 1.0f, 0.0f);
-                glTexCoord2f(1.0, 1.0);  glVertex3f(1.0f, 1.0f, 0.0f);
-                glTexCoord2f(1.0, 0.0);  glVertex3f(1.0f, -1.0f, 0.0f);
-
-                
-
-                glBegin(GL_QUADS);
-                glTexCoord2f(0.0, 0.0);  glVertex3f(-1.0f, -1.0f, 0.0f);
-                glTexCoord2f(0.0, 1.0);  glVertex3f(-1.0f, 1.0f, 0.0f);
-                glTexCoord2f(1.0, 1.0);  glVertex3f(1.0f, 1.0f, 0.0f);
-                glTexCoord2f(1.0, 0.0);  glVertex3f(1.0f, -1.0f, 0.0f);
+               
 
 
 
