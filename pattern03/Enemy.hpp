@@ -30,7 +30,7 @@ public:
         }
         else
         {
-            enemyX[0] -= 0.009f;
+            enemyX[0] -= 0.00009f;
         }
         if (enemyX[1] <= -1)
         {
@@ -38,7 +38,7 @@ public:
         }
         else
         {
-            enemyX[1] -= 0.008f;
+            enemyX[1] -= 0.00008f;
         }
         if (enemyX[2] <= -1)
         {
@@ -46,7 +46,7 @@ public:
         }
         else
         {
-            enemyX[2] -= 0.007f;
+            enemyX[2] -= 0.00007f;
         }
         if (enemy1Y[0] <= -1)
         {
@@ -54,7 +54,7 @@ public:
         }
         else
         {
-            enemy1Y[0] -= 0.006f;
+            enemy1Y[0] -= 0.00006f;
         }
         if (enemy1Y[1] <= -1)
         {
@@ -62,7 +62,7 @@ public:
         }
         else
         {
-            enemy1Y[1] -= 0.007f;
+            enemy1Y[1] -= 0.00007f;
         }
         if (enemy1Y[2] <= -1)
         {
@@ -70,7 +70,7 @@ public:
         }
         else
         {
-            enemy1Y[2] -= 0.005f;
+            enemy1Y[2] -= 0.00005f;
         }
     }
     

@@ -28,7 +28,7 @@ namespace LeeJungHan_Engine
         Enemy enemy;    
         bool GameRunning = true;
         WindowScreen windowScreen;
-
+        bool startGame = false;
     private:
         void reStart() {
             if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || GetAsyncKeyState(VK_SHIFT) & 0x8001)
@@ -79,6 +79,10 @@ namespace LeeJungHan_Engine
             {
                 player.cPressed();
             }
+            else if (GetAsyncKeyState(VK_SPACE) & 0x8000 || GetAsyncKeyState(VK_SPACE) & 0x8001)
+            {
+                startGame = true;
+            }
         }
 
         static void error_callback(int error, const char* description)
@@ -96,30 +100,22 @@ namespace LeeJungHan_Engine
         
         void Run()
         {
-            /*windowScreen.startScreen();
-
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            glEnable(GL_TEXTURE_2D);
-            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-            glBindTexture(GL_TEXTURE_2D, texName);
-
-            glBegin(GL_QUADS);
-            glTexCoord2f(0.0, 0.0);  glVertex3f(-1.0f, -1.0f, 0.0f);
-            glTexCoord2f(0.0, 1.0);  glVertex3f(-1.0f, 1.0f, 0.0f);
-            glTexCoord2f(1.0, 1.0);  glVertex3f(1.0f, 1.0f, 0.0f);
-            glTexCoord2f(1.0, 0.0);  glVertex3f(1.0f, -1.0f, 0.0f);
-
-            glEnd();
-            glFlush();
-            glDisable(GL_TEXTURE_2D);
-            if (GetAsyncKeyState(VK_SPACE) & 0x8000 || GetAsyncKeyState(VK_SPACE) & 0x8001)*/
+            
             {
+                
                 GameRunning = true;
                 windowScreen.sizeWindow();  //윈도우 조건 체크
                 while (!windowScreen.windowwhile()) {
-
-                    Update();
+                    Input();
+                    if (startGame = true)
+                    {
+                        Update();
+                    }
+                    else if(startGame = false)
+                    {
+                        windowScreen.startScreen();
+                        windowScreen.checkWindowEvent();
+                    }
                 }
             }
             windowScreen.endWindow(); //윈도우 종료
@@ -319,8 +315,7 @@ namespace LeeJungHan_Engine
             if (GameRunning == false)
             {
                
-                cout << " 게임 종료\n\n"; 
-                cout << " 재시작은 SHIFT키를 눌러주세요 \n\n";
+                
   
                 windowScreen.endScreen();
                     
