@@ -142,9 +142,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="LJHgameLoop.hpp" />
     <ClInclude Include="Player.hpp" />
@@ -155,6 +152,9 @@
     <Image Include="flower.bmp" />
     <Image Include="kiel.bmp" />
     <Image Include="tank.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
