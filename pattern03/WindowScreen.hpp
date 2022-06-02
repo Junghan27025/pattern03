@@ -93,7 +93,7 @@ public:
 
         BITMAPHEADER originalHeader;
         int imgSize;
-        BYTE* image = LoadBitmapFile(&originalHeader, &imgSize, "kiel.bmp");
+        BYTE* image = LoadBitmapFile(&originalHeader, &imgSize, "EndScreen.bmp");
         if (image == NULL) return;
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

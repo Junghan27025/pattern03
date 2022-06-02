@@ -34,20 +34,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="airplane.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="tank.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="flower.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="kiel.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Image Include="EndScreen.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="StartScreen.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>
